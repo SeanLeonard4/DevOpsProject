@@ -2,7 +2,6 @@ pipeline{
     ageny any
     environment{
         MYSQL_ROOT_PASSWORD = credentials("MYSQL_ROOT_PASSWORD")
-
     }
     stages{
         stage("install dependencies"){
@@ -11,13 +10,20 @@ pipeline{
             }
         }
         stage("build"){
-            sh "docker-compose build --parallel"
+            steps{
+                sh "docker-compose build --parallel"
+            }
         }
         stage("push"){
-            sh "docker-compose push"
+            steps{
+                sh "docker-compose push"
+            }
         }
         stage("deploy"){
-            sh "docker-compose up -d"
+            steps{
+                sh "docker-compose up -d"
+            }
+            
         }
     }
 }
