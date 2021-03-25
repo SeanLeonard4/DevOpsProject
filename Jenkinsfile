@@ -1,5 +1,5 @@
 pipeline{
-    ageny any
+    agent any
     environment{
         MYSQL_ROOT_PASSWORD = credentials("MYSQL_ROOT_PASSWORD")
     }
