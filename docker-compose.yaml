@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  testdb:
+    image: sleonard9704/testdb
+    build: ./database
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: testdb
+    volumes:
+    - type: volume
+      source: testdb-volume
+      target: /var/lib/mysql
+  
+  backend-app:
+    build: ./backend
+    container_name: backend-app
+    image: sleonard9704/backend-app
+
+  frontend-app:
+    build: ./frontend
+    container_name: frontend-app
+    image: sleonard9704/frontend-app
+
+  nginx:
+    image: nginx:latest
+    ports:
+    - target: 80
+      published: 80
+    volumes:
+    - type: bind
+      source: ./nginx/nginx.conf
+      target: /etc/nginx/nginx.conf
+  volumes:
+    testdb-volume:
